@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Case study: nowoczesny, responsywny landing page. Projekt demonstracyjny pokazujący UX/UI, SEO techniczne, wydajność i optymalizację konwersji.">
+<meta name="description" content="Projekt demonstracyjny: nowoczesny landing page – UX/UI, responsywność, SEO techniczne, dostępność i optymalizacja wydajności. Case study.">
 <meta name="author" content="Digital Portfolio">
 <meta name="robots" content="index, follow">
 <meta property="og:title" content="Landing Page – Case Study | Digital Portfolio">
-<meta property="og:description" content="Projekt demonstracyjny: responsywność, UX/UI, SEO, wydajność i konwersja.">
+<meta property="og:description" content="Projekt demonstracyjny pokazujący sposób budowy nowoczesnego, responsywnego landing page'a.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://example.com/case-study">
 <meta property="og:image" content="https://example.com/og-case-study.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Landing Page – Case Study">
-<meta name="twitter:description" content="Projekt demonstracyjny: responsywność, UX/UI, SEO, wydajność, konwersja.">
+<meta name="twitter:description" content="Projekt demonstracyjny: UX/UI, responsywność, SEO techniczne, wydajność.">
 <title>Landing Page – Case Study | Digital Portfolio</title>
 <link rel="canonical" href="https://example.com/case-study">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,24 +38,42 @@
 
 :root {
     --color-primary: #0d1b2a;
+    --color-primary-soft: #1a2f4a;
     --color-accent: #ff6b35;
     --color-accent-dark: #e05520;
     --color-text: #1a1a1a;
     --color-text-muted: #6b7280;
+    --color-text-soft: #8a919e;
     --color-bg: #ffffff;
     --color-bg-soft: #f7f8fa;
     --color-border: #e5e7eb;
     --color-success: #16a34a;
     --color-error: #dc2626;
+
     --radius: 12px;
-    --radius-lg: 20px;
+    --radius-lg: 18px;
+    --radius-pill: 100px;
+
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
     --shadow: 0 4px 20px rgba(0,0,0,0.06);
-    --shadow-lg: 0 20px 50px rgba(0,0,0,0.12);
-    --transition: 0.3s ease;
-    --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --shadow-lg: 0 20px 50px rgba(0,0,0,0.10);
+
+    --transition: 0.25s ease;
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+    --section-pad-y: 96px;
+    --container-pad: 24px;
+    --header-h: 68px;
 }
 
-html { scroll-behavior: smooth; }
+@media (max-width: 768px) {
+    :root {
+        --section-pad-y: 64px;
+        --container-pad: 20px;
+    }
+}
+
+html { scroll-behavior: smooth; scroll-padding-top: 84px; }
 
 body {
     font-family: var(--font);
@@ -64,79 +82,122 @@ body {
     line-height: 1.6;
     font-size: 16px;
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
 }
 
 img { max-width: 100%; height: auto; display: block; }
 a { color: inherit; text-decoration: none; }
 ul { list-style: none; }
-button { font-family: inherit; cursor: pointer; border: none; background: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
 
+/* ===== CONTAINER ===== */
 .container {
     width: 100%;
-    max-width: 1200px;
+    max-width: 1180px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 var(--container-pad);
 }
+
+/* ===== FOCUS ===== */
+:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 6px;
+}
+
+/* ===== SKIP LINK (a11y) ===== */
+.skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 8px;
+    background: var(--color-primary);
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 8px;
+    z-index: 10000;
+    font-weight: 600;
+}
+.skip-link:focus { left: 16px; }
 
 /* ===== HEADER ===== */
 .header {
     position: fixed;
     top: 0; left: 0; right: 0;
-    background: rgba(255,255,255,0.95);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--color-border);
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: saturate(180%) blur(12px);
+    -webkit-backdrop-filter: saturate(180%) blur(12px);
+    border-bottom: 1px solid transparent;
     z-index: 1000;
-    transition: var(--transition);
+    transition: border-color var(--transition), box-shadow var(--transition);
 }
-.header.scrolled { box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+.header.scrolled {
+    border-bottom-color: var(--color-border);
+    box-shadow: var(--shadow-sm);
+}
 
 .header__inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 72px;
+    height: var(--header-h);
 }
 
-.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; }
+.logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
 .logo__mark {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 38px; height: 38px;
+    width: 34px; height: 34px;
     background: var(--color-accent);
     color: #fff;
-    border-radius: 10px;
+    border-radius: 9px;
     font-weight: 800;
-    font-size: 14px;
+    font-size: 13px;
+    letter-spacing: 0.02em;
 }
-.logo__text { font-size: 1.05rem; color: var(--color-primary); }
+.logo__text { font-size: 1rem; color: var(--color-primary); }
 
-.nav__list { display: flex; align-items: center; gap: 28px; }
+.nav__list { display: flex; align-items: center; gap: 26px; }
 .nav__link {
-    font-size: 0.95rem;
+    font-size: 0.92rem;
     font-weight: 500;
     color: var(--color-text);
-    transition: var(--transition);
+    transition: color var(--transition);
+    padding: 8px 0;
 }
 .nav__link:hover { color: var(--color-accent); }
 .nav__link--cta {
     background: var(--color-primary);
     color: #fff !important;
-    padding: 10px 20px;
+    padding: 10px 18px;
     border-radius: 8px;
+    transition: background var(--transition), transform var(--transition);
 }
-.nav__link--cta:hover { background: var(--color-accent); }
+.nav__link--cta:hover { background: var(--color-accent); transform: translateY(-1px); }
 
 .hamburger {
     display: none;
     flex-direction: column;
     gap: 5px;
     padding: 8px;
+    width: 40px;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
 }
 .hamburger span {
-    width: 24px; height: 2px;
+    display: block;
+    width: 22px; height: 2px;
     background: var(--color-primary);
-    transition: var(--transition);
+    border-radius: 2px;
+    transition: transform var(--transition), opacity var(--transition);
 }
 .hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
 .hamburger.active span:nth-child(2) { opacity: 0; }
@@ -144,14 +205,16 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 /* ===== HERO ===== */
 .hero {
-    padding: 140px 0 80px;
-    background: linear-gradient(135deg, #f7f8fa 0%, #ffffff 100%);
+    padding: calc(var(--header-h) + 72px) 0 88px;
+    background:
+        radial-gradient(1000px 500px at 90% -10%, rgba(255,107,53,0.08), transparent 60%),
+        linear-gradient(180deg, #fbfcfd 0%, #ffffff 100%);
     overflow: hidden;
 }
 .hero__inner {
     display: grid;
     grid-template-columns: 1.15fr 0.85fr;
-    gap: 60px;
+    gap: 64px;
     align-items: center;
 }
 
@@ -159,53 +222,65 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: #fff3ec;
+    background: rgba(255,107,53,0.08);
     color: var(--color-accent-dark);
-    padding: 8px 16px;
-    border-radius: 100px;
-    font-size: 0.72rem;
+    padding: 7px 14px;
+    border-radius: var(--radius-pill);
+    font-size: 0.7rem;
     font-weight: 700;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    margin-bottom: 24px;
-    border: 1px solid rgba(255,107,53,0.25);
+    margin-bottom: 22px;
+    border: 1px solid rgba(255,107,53,0.22);
 }
 .badge-demo::before {
     content: '';
-    width: 7px; height: 7px;
+    width: 6px; height: 6px;
     border-radius: 50%;
     background: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(255,107,53,0.18);
 }
 
 .hero__title {
-    font-size: clamp(1.9rem, 4.6vw, 3.2rem);
+    font-size: clamp(1.9rem, 4.2vw, 2.9rem);
     line-height: 1.15;
     font-weight: 800;
     color: var(--color-primary);
     margin-bottom: 20px;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.025em;
 }
-.highlight { color: var(--color-accent); }
+.highlight {
+    color: var(--color-accent);
+    display: inline-block;
+}
 
 .hero__subtitle {
-    font-size: 1.1rem;
+    font-size: 1.08rem;
     color: var(--color-text-muted);
     margin-bottom: 32px;
     max-width: 560px;
     font-weight: 500;
+    line-height: 1.65;
+}
+.hero__subtitle strong {
+    color: var(--color-primary);
+    font-weight: 600;
 }
 
 .hero__cta {
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
-    margin-bottom: 28px;
+    margin-bottom: 26px;
 }
 
 .hero__note {
-    font-size: 0.85rem;
-    color: var(--color-text-muted);
-    font-style: italic;
+    font-size: 0.83rem;
+    color: var(--color-text-soft);
+    max-width: 520px;
+    padding-left: 14px;
+    border-left: 2px solid var(--color-border);
+    line-height: 1.55;
 }
 
 /* ===== BUTTONS ===== */
@@ -213,40 +288,47 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 14px 28px;
+    gap: 8px;
+    padding: 14px 26px;
     border-radius: 10px;
     font-weight: 600;
-    font-size: 1rem;
-    transition: var(--transition);
+    font-size: 0.98rem;
+    line-height: 1;
+    transition: background var(--transition), color var(--transition),
+                border-color var(--transition), transform var(--transition),
+                box-shadow var(--transition);
     text-align: center;
     cursor: pointer;
     border: 2px solid transparent;
     white-space: nowrap;
+    min-height: 48px;
 }
 .btn--primary { background: var(--color-accent); color: #fff; }
 .btn--primary:hover {
     background: var(--color-accent-dark);
     transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(255,107,53,0.3);
+    box-shadow: 0 10px 22px rgba(255,107,53,0.28);
 }
 .btn--ghost {
     background: transparent;
     color: var(--color-primary);
     border-color: var(--color-border);
 }
-.btn--ghost:hover { border-color: var(--color-primary); }
+.btn--ghost:hover { border-color: var(--color-primary); background: #fff; }
 .btn--outline {
     background: transparent;
     color: var(--color-primary);
     border-color: var(--color-primary);
 }
 .btn--outline:hover { background: var(--color-primary); color: #fff; }
-.btn--light { background: #fff; color: var(--color-primary); }
-.btn--light:hover { background: #f0f0f0; }
 .btn--full { width: 100%; }
 
-/* ===== HERO VISUAL ===== */
-.hero__visual { display: flex; justify-content: center; }
+/* ===== HERO VISUAL (mockup) ===== */
+.hero__visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .hero__mockup {
     background: #fff;
     border-radius: var(--radius-lg);
@@ -255,73 +337,89 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     max-width: 400px;
     overflow: hidden;
     border: 1px solid var(--color-border);
+    transform: rotate(-0.5deg);
+    transition: transform 0.4s ease;
 }
+.hero__mockup:hover { transform: rotate(0deg) translateY(-2px); }
+
 .hero__mockup-bar {
     display: flex;
     gap: 6px;
-    padding: 14px 16px;
+    padding: 12px 14px;
     background: var(--color-bg-soft);
     border-bottom: 1px solid var(--color-border);
 }
 .hero__mockup-dot {
-    width: 11px; height: 11px;
+    width: 10px; height: 10px;
     border-radius: 50%;
     background: #d1d5db;
 }
 .hero__mockup-dot:nth-child(1) { background: #ff5f57; }
 .hero__mockup-dot:nth-child(2) { background: #febc2e; }
 .hero__mockup-dot:nth-child(3) { background: #28c840; }
-.hero__mockup-body { padding: 24px; display: grid; gap: 14px; }
+
+.hero__mockup-body {
+    padding: 22px;
+    display: grid;
+    gap: 12px;
+}
 .hero__mockup-line {
-    height: 10px;
+    height: 9px;
     border-radius: 4px;
     background: var(--color-border);
 }
-.hero__mockup-line--accent {
-    background: var(--color-accent);
-    width: 60%;
-    height: 14px;
-}
-.hero__mockup-line--short { width: 40%; }
+.hero__mockup-line--accent { background: var(--color-accent); width: 58%; height: 13px; }
+.hero__mockup-line--short { width: 42%; }
 .hero__mockup-line--long { width: 100%; }
-.hero__mockup-line--mid { width: 75%; }
+.hero__mockup-line--mid { width: 76%; }
 .hero__mockup-block {
-    height: 60px;
+    height: 56px;
     border-radius: 8px;
     background: linear-gradient(135deg, #fff3ec, #ffe4d3);
     border: 1px solid rgba(255,107,53,0.15);
 }
 
 /* ===== SECTIONS ===== */
-.section { padding: 90px 0; }
+.section { padding: var(--section-pad-y) 0; }
 .section--soft { background: var(--color-bg-soft); }
+.section--dark {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-soft));
+    color: #fff;
+}
+.section--dark .section__title { color: #fff; }
+.section--dark .section__subtitle { color: rgba(255,255,255,0.75); }
+.section--dark .section__eyebrow { color: var(--color-accent); }
 
 .section__header {
     text-align: center;
-    max-width: 760px;
+    max-width: 720px;
     margin: 0 auto 56px;
 }
 .section__eyebrow {
     display: inline-block;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.14em;
     color: var(--color-accent);
     margin-bottom: 12px;
 }
 .section__title {
-    font-size: clamp(1.65rem, 3.6vw, 2.3rem);
+    font-size: clamp(1.6rem, 3.4vw, 2.2rem);
     font-weight: 800;
     line-height: 1.2;
     color: var(--color-primary);
     margin-bottom: 14px;
     letter-spacing: -0.02em;
 }
-.section__subtitle { font-size: 1.05rem; color: var(--color-text-muted); }
+.section__subtitle {
+    font-size: 1.02rem;
+    color: var(--color-text-muted);
+    line-height: 1.65;
+}
 
 /* ===== GRID ===== */
-.grid { display: grid; gap: 22px; }
+.grid { display: grid; gap: 20px; }
 .grid--2 { grid-template-columns: repeat(2, 1fr); }
 .grid--3 { grid-template-columns: repeat(3, 1fr); }
 .grid--4 { grid-template-columns: repeat(4, 1fr); }
@@ -330,71 +428,99 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .card {
     background: #fff;
     border: 1px solid var(--color-border);
-    padding: 28px;
+    padding: 26px;
     border-radius: var(--radius);
-    transition: var(--transition);
+    transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 .card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
     border-color: transparent;
 }
 .card__icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 44px; height: 44px;
+    width: 42px; height: 42px;
     border-radius: 10px;
-    background: #fff3ec;
+    background: rgba(255,107,53,0.09);
     color: var(--color-accent);
-    font-size: 1.35rem;
+    font-size: 1.25rem;
     margin-bottom: 16px;
 }
 .card__title {
-    font-size: 1.05rem;
+    font-size: 1.02rem;
     font-weight: 700;
     margin-bottom: 8px;
     color: var(--color-primary);
+    letter-spacing: -0.01em;
 }
-.card__text { color: var(--color-text-muted); font-size: 0.93rem; line-height: 1.55; }
+.card__text {
+    color: var(--color-text-muted);
+    font-size: 0.92rem;
+    line-height: 1.6;
+}
 
-/* ===== STEPS (JAK PRACUJĘ) ===== */
+/* ===== STEPS ===== */
 .steps {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 18px;
+    gap: 16px;
 }
 .step {
     background: #fff;
-    padding: 26px 22px;
+    padding: 24px 20px;
     border-radius: var(--radius);
     border: 1px solid var(--color-border);
-    transition: var(--transition);
+    transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
-.step:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.step:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+    border-color: transparent;
+}
 .step__num {
-    font-size: 1.6rem;
+    font-size: 0.78rem;
     font-weight: 800;
     color: var(--color-accent);
-    line-height: 1;
+    letter-spacing: 0.1em;
     margin-bottom: 14px;
-    opacity: 0.9;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.step__num::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--color-border);
 }
 .step__title {
-    font-size: 1rem;
+    font-size: 0.98rem;
     font-weight: 700;
     margin-bottom: 8px;
     color: var(--color-primary);
+    letter-spacing: -0.01em;
 }
-.step__text { color: var(--color-text-muted); font-size: 0.88rem; line-height: 1.55; }
+.step__text {
+    color: var(--color-text-muted);
+    font-size: 0.86rem;
+    line-height: 1.55;
+}
 
 /* ===== TECHNOLOGIE ===== */
 .tech-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 10px;
     justify-content: center;
-    max-width: 880px;
+    max-width: 860px;
     margin: 0 auto;
 }
 .tech-tag {
@@ -403,12 +529,12 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     gap: 8px;
     background: #fff;
     border: 1px solid var(--color-border);
-    padding: 10px 18px;
-    border-radius: 100px;
-    font-size: 0.9rem;
+    padding: 9px 16px;
+    border-radius: var(--radius-pill);
+    font-size: 0.86rem;
     font-weight: 600;
     color: var(--color-primary);
-    transition: var(--transition);
+    transition: border-color var(--transition), color var(--transition), transform var(--transition);
 }
 .tech-tag:hover {
     border-color: var(--color-accent);
@@ -417,90 +543,111 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 
 /* ===== WYDAJNOŚĆ ===== */
-.perf {
+.perf-intro {
+    max-width: 720px;
+    margin: 0 auto 40px;
+    text-align: center;
+    font-size: 0.98rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+}
+.perf-list {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 18px;
-    max-width: 900px;
+    gap: 16px;
+    max-width: 1000px;
     margin: 0 auto;
 }
 .perf__item {
     background: #fff;
     border: 1px solid var(--color-border);
     border-radius: var(--radius);
-    padding: 26px 20px;
-    text-align: center;
+    padding: 22px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: transform var(--transition), box-shadow var(--transition);
+}
+.perf__item:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+}
+.perf__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px; height: 36px;
+    background: rgba(255,107,53,0.09);
+    color: var(--color-accent);
+    border-radius: 9px;
+    font-size: 1.05rem;
 }
 .perf__label {
-    font-size: 0.8rem;
+    font-size: 0.94rem;
     font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--color-text-muted);
-    margin-bottom: 10px;
-}
-.perf__value {
-    font-size: 1.6rem;
-    font-weight: 800;
     color: var(--color-primary);
-    line-height: 1;
+    letter-spacing: -0.01em;
 }
-.perf__placeholder {
+.perf__desc {
     font-size: 0.85rem;
     color: var(--color-text-muted);
-    margin-top: 8px;
-    font-style: italic;
+    line-height: 1.55;
 }
 .perf__note {
     text-align: center;
-    margin-top: 28px;
-    font-size: 0.88rem;
-    color: var(--color-text-muted);
+    margin-top: 32px;
+    font-size: 0.85rem;
+    color: var(--color-text-soft);
     font-style: italic;
     max-width: 620px;
     margin-left: auto;
     margin-right: auto;
+    line-height: 1.6;
 }
 
 /* ===== FAQ ===== */
 .faq__list {
-    max-width: 800px;
+    max-width: 780px;
     margin: 0 auto;
     display: grid;
-    gap: 12px;
+    gap: 10px;
 }
 .faq__item {
     background: #fff;
     border: 1px solid var(--color-border);
     border-radius: var(--radius);
-    padding: 20px 24px;
-    transition: var(--transition);
+    padding: 20px 22px;
+    transition: box-shadow var(--transition), border-color var(--transition);
 }
-.faq__item[open] { box-shadow: var(--shadow); }
+.faq__item[open] { box-shadow: var(--shadow); border-color: transparent; }
 .faq__question {
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 0.98rem;
     color: var(--color-primary);
     cursor: pointer;
     list-style: none;
     position: relative;
-    padding-right: 32px;
+    padding-right: 34px;
+    letter-spacing: -0.01em;
 }
 .faq__question::-webkit-details-marker { display: none; }
 .faq__question::after {
     content: '+';
     position: absolute;
-    right: 0; top: 50%;
+    right: 0;
+    top: 50%;
     transform: translateY(-50%);
-    font-size: 1.5rem;
+    font-size: 1.4rem;
+    font-weight: 400;
     color: var(--color-accent);
-    transition: var(--transition);
+    transition: transform var(--transition);
+    line-height: 1;
 }
 .faq__item[open] .faq__question::after { transform: translateY(-50%) rotate(45deg); }
 .faq__answer {
     margin-top: 12px;
     color: var(--color-text-muted);
-    font-size: 0.93rem;
+    font-size: 0.92rem;
     line-height: 1.7;
 }
 
@@ -511,11 +658,23 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     margin: 0 auto;
 }
 .github-cta__icon {
-    font-size: 2.5rem;
-    margin-bottom: 16px;
-    display: block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px; height: 56px;
+    background: rgba(255,107,53,0.09);
+    color: var(--color-accent);
+    border-radius: 14px;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
 }
-.github-cta .btn { margin-top: 24px; }
+.github-cta .btn { margin-top: 26px; }
+.github-cta__caption {
+    margin-top: 14px;
+    font-size: 0.82rem;
+    color: var(--color-text-soft);
+    font-style: italic;
+}
 
 /* ===== KONTAKT ===== */
 .contact__inner {
@@ -526,98 +685,147 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .contact__info .section__eyebrow,
 .contact__info .section__title,
-.contact__info .section__subtitle { text-align: left; }
-.contact__info .section__title { margin-bottom: 14px; }
-.contact__info .section__subtitle { margin-bottom: 24px; }
+.contact__info .section__subtitle {
+    text-align: left;
+    margin-left: 0;
+    margin-right: 0;
+}
+.contact__info .section__header {
+    text-align: left;
+    margin: 0 0 24px;
+    max-width: none;
+}
 
 .contact__points {
     display: grid;
-    gap: 14px;
-    margin-top: 24px;
+    gap: 12px;
+    margin-top: 8px;
 }
 .contact__points li {
     display: flex;
     gap: 12px;
     align-items: flex-start;
-    font-size: 0.95rem;
+    font-size: 0.94rem;
     color: var(--color-text-muted);
+    line-height: 1.55;
 }
 .contact__points li::before {
-    content: '✓';
-    color: var(--color-accent);
-    font-weight: 800;
+    content: '';
     flex-shrink: 0;
+    width: 18px; height: 18px;
+    margin-top: 2px;
+    border-radius: 50%;
+    background: rgba(255,107,53,0.12) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ff6b35' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>") center/12px no-repeat;
 }
 
 .contact__form {
     background: #fff;
-    padding: 36px;
+    padding: 34px;
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-lg);
     border: 1px solid var(--color-border);
 }
-.form__group { margin-bottom: 18px; }
+.form__group { margin-bottom: 16px; }
 .form__group label {
     display: block;
-    font-size: 0.88rem;
+    font-size: 0.86rem;
     font-weight: 600;
     color: var(--color-primary);
-    margin-bottom: 8px;
+    margin-bottom: 7px;
 }
 .form__group input,
 .form__group textarea {
     width: 100%;
-    padding: 13px 16px;
+    padding: 13px 15px;
     border: 1px solid var(--color-border);
     border-radius: 10px;
-    font-size: 1rem;
+    font-size: 0.96rem;
     font-family: inherit;
     background: #fff;
     color: var(--color-text);
-    transition: var(--transition);
+    transition: border-color var(--transition), box-shadow var(--transition);
 }
+.form__group input::placeholder,
+.form__group textarea::placeholder { color: #a5abb6; }
 .form__group input:focus,
 .form__group textarea:focus {
     outline: none;
     border-color: var(--color-accent);
-    box-shadow: 0 0 0 3px rgba(255,107,53,0.15);
+    box-shadow: 0 0 0 3px rgba(255,107,53,0.14);
 }
-.form__group textarea { resize: vertical; min-height: 120px; }
+.form__group textarea { resize: vertical; min-height: 118px; }
 .form__group input.error,
 .form__group textarea.error { border-color: var(--color-error); }
 .form__error {
     display: block;
     color: var(--color-error);
-    font-size: 0.83rem;
+    font-size: 0.82rem;
     margin-top: 6px;
+    min-height: 0;
 }
-.form__group--checkbox { margin-bottom: 22px; }
+.form__group--checkbox { margin: 18px 0 20px; }
 .checkbox {
     display: flex;
     gap: 10px;
     align-items: flex-start;
-    font-size: 0.88rem;
+    font-size: 0.86rem;
     color: var(--color-text-muted);
     cursor: pointer;
     line-height: 1.5;
 }
-.checkbox input { margin-top: 4px; accent-color: var(--color-accent); }
+.checkbox input {
+    margin-top: 3px;
+    accent-color: var(--color-accent);
+    width: 16px; height: 16px;
+    flex-shrink: 0;
+}
 
 .hp-field {
     position: absolute !important;
     left: -9999px !important;
     opacity: 0 !important;
     pointer-events: none !important;
+    width: 0; height: 0;
+    overflow: hidden;
 }
 
 .form__status {
     text-align: center;
-    margin-top: 16px;
-    font-size: 0.93rem;
+    margin-top: 14px;
+    font-size: 0.92rem;
     font-weight: 500;
+    min-height: 1.2em;
 }
 .form__status.success { color: var(--color-success); }
 .form__status.error { color: var(--color-error); }
+
+.form__demo-note {
+    margin-top: 14px;
+    padding: 12px 14px;
+    background: var(--color-bg-soft);
+    border: 1px dashed var(--color-border);
+    border-radius: 10px;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    line-height: 1.55;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+}
+.form__demo-note::before {
+    content: 'ℹ';
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    margin-top: 1px;
+}
 
 /* ===== FOOTER ===== */
 .footer {
@@ -635,144 +843,183 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     color: #fff;
     display: inline-block;
     margin: 12px 0 8px;
-    font-size: 1.05rem;
+    font-size: 1.02rem;
 }
-.footer__brand p { font-size: 0.88rem; line-height: 1.6; max-width: 320px; }
+.footer__brand p {
+    font-size: 0.86rem;
+    line-height: 1.65;
+    max-width: 320px;
+    color: #a8b3c2;
+}
 .footer__badge {
     display: inline-block;
-    margin-top: 14px;
+    margin-top: 16px;
     padding: 5px 12px;
-    background: rgba(255,107,53,0.15);
-    border: 1px solid rgba(255,107,53,0.3);
-    border-radius: 100px;
-    font-size: 0.72rem;
+    background: rgba(255,107,53,0.12);
+    border: 1px solid rgba(255,107,53,0.28);
+    border-radius: var(--radius-pill);
+    font-size: 0.68rem;
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--color-accent);
 }
 .footer h4 {
     color: #fff;
-    font-size: 0.85rem;
+    font-size: 0.78rem;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.12em;
     margin-bottom: 14px;
+    font-weight: 700;
 }
 .footer ul { display: grid; gap: 8px; }
-.footer a { font-size: 0.88rem; transition: var(--transition); }
+.footer a {
+    font-size: 0.86rem;
+    color: #a8b3c2;
+    transition: color var(--transition);
+}
 .footer a:hover { color: var(--color-accent); }
 .footer__bottom {
-    border-top: 1px solid rgba(255,255,255,0.1);
-    padding: 20px 0;
-    font-size: 0.82rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 18px 0;
+    font-size: 0.8rem;
     text-align: center;
+    color: #8a94a4;
 }
 
 /* ===== FLOATING CTA ===== */
 .floating-cta {
     display: none;
     position: fixed;
-    bottom: 16px;
-    left: 16px;
-    right: 16px;
+    bottom: 14px;
+    left: 14px;
+    right: 14px;
     background: var(--color-accent);
     color: #fff;
-    padding: 15px;
+    padding: 14px;
     text-align: center;
     border-radius: 12px;
     font-weight: 700;
-    box-shadow: 0 10px 30px rgba(255,107,53,0.4);
+    font-size: 0.95rem;
+    box-shadow: 0 10px 28px rgba(255,107,53,0.38);
     z-index: 999;
+    transition: background var(--transition), transform var(--transition);
 }
+.floating-cta:hover { background: var(--color-accent-dark); }
 
-/* ===== REVEAL ANIMATION ===== */
+/* ===== REVEAL ===== */
 .reveal {
     opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.55s ease, transform 0.55s ease;
+    transform: translateY(16px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    will-change: opacity, transform;
 }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
 @media (prefers-reduced-motion: reduce) {
-    .reveal { opacity: 1; transform: none; transition: none; }
+    .reveal { opacity: 1; transform: none; transition: none; will-change: auto; }
     html { scroll-behavior: auto; }
+    .hero__mockup { transform: none; }
+    .hero__mockup:hover { transform: none; }
 }
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1024px) {
-    .hero__inner { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+    .hero__inner { grid-template-columns: 1fr; gap: 44px; text-align: center; }
     .hero__cta { justify-content: center; }
     .hero__subtitle { margin-left: auto; margin-right: auto; }
+    .hero__note { margin-left: auto; margin-right: auto; text-align: left; }
     .hero__visual { order: -1; }
+    .hero__mockup { transform: none; }
+
     .grid--3 { grid-template-columns: repeat(2, 1fr); }
     .grid--4 { grid-template-columns: repeat(2, 1fr); }
     .steps { grid-template-columns: repeat(3, 1fr); }
-    .perf { grid-template-columns: repeat(2, 1fr); }
+    .perf-list { grid-template-columns: repeat(2, 1fr); }
+
     .contact__inner { grid-template-columns: 1fr; gap: 40px; }
     .contact__info .section__eyebrow,
     .contact__info .section__title,
-    .contact__info .section__subtitle { text-align: center; }
+    .contact__info .section__subtitle,
+    .contact__info .section__header { text-align: center; margin-left: auto; margin-right: auto; }
     .contact__points { max-width: 520px; margin-left: auto; margin-right: auto; }
+
     .footer__inner { grid-template-columns: 1fr 1fr; }
 }
 
 @media (max-width: 768px) {
     .nav {
         position: fixed;
-        top: 72px; left: 0; right: 0;
+        top: var(--header-h);
+        left: 0; right: 0;
         background: #fff;
         border-bottom: 1px solid var(--color-border);
-        transform: translateY(-150%);
+        transform: translateY(-120%);
         transition: transform 0.35s ease;
-        padding: 18px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-        max-height: calc(100vh - 72px);
+        padding: 16px;
+        box-shadow: var(--shadow-lg);
+        max-height: calc(100vh - var(--header-h));
         overflow-y: auto;
     }
     .nav.open { transform: translateY(0); }
-    .nav__list { flex-direction: column; gap: 4px; align-items: stretch; }
-    .nav__link { padding: 14px; display: block; text-align: center; border-radius: 8px; }
+    .nav__list { flex-direction: column; gap: 2px; align-items: stretch; }
+    .nav__link {
+        padding: 14px 16px;
+        display: block;
+        text-align: center;
+        border-radius: 8px;
+        font-size: 0.98rem;
+    }
     .nav__link:hover { background: var(--color-bg-soft); }
     .nav__link--cta { margin-top: 8px; }
+
     .hamburger { display: flex; }
-    .hero { padding: 110px 0 60px; }
-    .section { padding: 68px 0; }
+
+    .hero { padding: calc(var(--header-h) + 48px) 0 64px; }
+
     .grid--2, .grid--3, .grid--4 { grid-template-columns: 1fr; }
-    .steps { grid-template-columns: 1fr; }
-    .perf { grid-template-columns: repeat(2, 1fr); }
+    .steps { grid-template-columns: 1fr; gap: 12px; }
+    .perf-list { grid-template-columns: 1fr; }
+
     .contact__form { padding: 26px 20px; }
-    .footer__inner { grid-template-columns: 1fr; text-align: center; }
+
+    .footer__inner { grid-template-columns: 1fr; text-align: center; gap: 28px; }
     .footer__brand p { margin-left: auto; margin-right: auto; }
+
     .floating-cta { display: block; }
-    body { padding-bottom: 78px; }
+    body { padding-bottom: 76px; }
 }
 
 @media (max-width: 480px) {
-    .hero__title { font-size: 1.7rem; }
-    .section__title { font-size: 1.5rem; }
-    .btn { padding: 13px 22px; font-size: 0.95rem; }
+    .hero__title { font-size: 1.65rem; line-height: 1.2; }
+    .section__title { font-size: 1.45rem; }
+    .hero__subtitle { font-size: 1rem; }
+    .btn { padding: 13px 20px; font-size: 0.94rem; }
     .hero__cta { flex-direction: column; width: 100%; }
     .hero__cta .btn { width: 100%; }
-    .perf { grid-template-columns: 1fr; }
-    .tech-tag { font-size: 0.85rem; padding: 9px 15px; }
+    .tech-tag { font-size: 0.82rem; padding: 8px 14px; }
+    .section__header { margin-bottom: 40px; }
+    .card, .step, .perf__item { padding: 22px 18px; }
 }
 </style>
 </head>
 <body>
 
+<a class="skip-link" href="#hero">Przejdź do treści</a>
+
 <!-- ===== HEADER ===== -->
 <header class="header" id="header">
     <div class="container header__inner">
         <a href="#hero" class="logo" aria-label="Początek strony">
-            <span class="logo__mark">DP</span>
+            <span class="logo__mark" aria-hidden="true">DP</span>
             <span class="logo__text">Digital Portfolio</span>
         </a>
         <nav class="nav" id="nav" aria-label="Menu główne">
             <ul class="nav__list">
                 <li><a href="#zakres" class="nav__link">Zakres</a></li>
-                <li><a href="#technologie" class="nav__link">Technologie</a></li>
                 <li><a href="#proces" class="nav__link">Proces</a></li>
-                <li><a href="#wartosc" class="nav__link">Wartość</a></li>
+                <li><a href="#technologie" class="nav__link">Technologie</a></li>
+                <li><a href="#jakosc" class="nav__link">Jakość</a></li>
                 <li><a href="#github" class="nav__link">GitHub</a></li>
                 <li><a href="#kontakt" class="nav__link nav__link--cta">Kontakt</a></li>
             </ul>
@@ -792,14 +1039,15 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
                 Landing page zaprojektowany tak, żeby <span class="highlight">nie tylko wyglądał — ale działał.</span>
             </h1>
             <p class="hero__subtitle">
-                Responsywność • UX/UI • SEO • wydajność • konwersja
+                <strong>Responsywność • UX/UI • SEO • wydajność • konwersja.</strong><br>
+                To przykładowa realizacja pokazująca, w jaki sposób buduję nowoczesne, szybkie i przemyślane strony internetowe.
             </p>
             <div class="hero__cta">
                 <a href="#zakres" class="btn btn--primary">Zobacz realizację</a>
                 <a href="#kontakt" class="btn btn--ghost">Porozmawiajmy o projekcie</a>
             </div>
             <p class="hero__note">
-                To strona pokazowa. Nie przedstawia wdrożenia u konkretnego klienta — prezentuje sposób pracy i możliwości techniczne.
+                Strona pokazowa — nie jest wdrożeniem u konkretnego klienta. Prezentuje sposób pracy, strukturę oraz podejście techniczne.
             </p>
         </div>
         <div class="hero__visual" aria-hidden="true">
@@ -825,63 +1073,103 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 <section class="section" id="zakres">
     <div class="container">
         <header class="section__header">
-            <span class="section__eyebrow">Zakres kompetencji</span>
+            <span class="section__eyebrow">Zakres</span>
             <h2 class="section__title">Co pokazuje ten projekt</h2>
             <p class="section__subtitle">
-                Każda sekcja tej strony to element warsztatu, który mogę wykorzystać w Twoim projekcie.
+                Każda sekcja tej strony odpowiada konkretnemu elementowi warsztatu, który mogę wykorzystać w Twoim projekcie.
             </p>
         </header>
         <div class="grid grid--3">
             <article class="card reveal">
-                <div class="card__icon">📱</div>
-                <h3 class="card__title">Responsywny landing page</h3>
-                <p class="card__text">Jeden projekt dopasowany do telefonu, tabletu i desktopu. Układ, typografia i CTA skalują się razem z ekranem.</p>
+                <span class="card__icon" aria-hidden="true">📱</span>
+                <h3 class="card__title">Responsywny layout</h3>
+                <p class="card__text">Jeden projekt dopasowany do telefonu, tabletu i komputera. Układ, typografia i CTA skalują się razem z ekranem.</p>
             </article>
             <article class="card reveal">
-                <div class="card__icon">🎨</div>
+                <span class="card__icon" aria-hidden="true">🎨</span>
                 <h3 class="card__title">UX/UI</h3>
-                <p class="card__text">Czytelna hierarchia informacji, przemyślana ścieżka użytkownika i spójny system wizualny.</p>
+                <p class="card__text">Czytelna hierarchia informacji, spójny system wizualny i przemyślana ścieżka użytkownika prowadząca do kontaktu.</p>
             </article>
             <article class="card reveal">
-                <div class="card__icon">🎯</div>
-                <h3 class="card__title">CTA i formularze</h3>
-                <p class="card__text">Wielokrotne punkty konwersji, czytelne wezwania do działania i formularz z walidacją po stronie klienta.</p>
+                <span class="card__icon" aria-hidden="true">🎯</span>
+                <h3 class="card__title">CTA i formularz</h3>
+                <p class="card__text">Kilka punktów konwersji, jasne wezwania do działania oraz formularz z walidacją i ochroną antyspamową.</p>
             </article>
             <article class="card reveal">
-                <div class="card__icon">🔍</div>
+                <span class="card__icon" aria-hidden="true">🔍</span>
                 <h3 class="card__title">SEO techniczne</h3>
-                <p class="card__text">Poprawna hierarchia H1–H3, meta tagi, Open Graph, dane strukturalne Schema.org i semantyczny HTML.</p>
+                <p class="card__text">Poprawna hierarchia nagłówków, meta tagi, Open Graph, dane strukturalne Schema.org i semantyczny HTML.</p>
             </article>
             <article class="card reveal">
-                <div class="card__icon">⚡</div>
-                <h3 class="card__title">Optymalizacja wydajności</h3>
-                <p class="card__text">Brak zbędnych bibliotek, minimalny JavaScript, lazy loading obrazów i lekki CSS.</p>
+                <span class="card__icon" aria-hidden="true">⚡</span>
+                <h3 class="card__title">Wydajność</h3>
+                <p class="card__text">Bez zbędnych bibliotek, minimalny JavaScript, lekki CSS i obrazy przygotowane pod szybkie ładowanie.</p>
             </article>
             <article class="card reveal">
-                <div class="card__icon">🧩</div>
-                <h3 class="card__title">Semantyczna struktura HTML</h3>
-                <p class="card__text">Sekcje, nagłówki, listy i przyciski zbudowane zgodnie z przeznaczeniem — łatwe do utrzymania i dostępne.</p>
+                <span class="card__icon" aria-hidden="true">♿</span>
+                <h3 class="card__title">Dostępność</h3>
+                <p class="card__text">Semantyczna struktura, kontrasty, focus states, obsługa klawiatury i wsparcie dla „reduced motion".</p>
             </article>
             <article class="card reveal">
-                <div class="card__icon">🔌</div>
+                <span class="card__icon" aria-hidden="true">🔌</span>
                 <h3 class="card__title">Integracje</h3>
-                <p class="card__text">Strona przygotowana pod podpięcie formularza do backendu, WordPressa lub zewnętrznego endpointu.</p>
+                <p class="card__text">Formularz przygotowany pod podpięcie do WordPressa, własnego backendu lub zewnętrznego systemu kontaktowego.</p>
             </article>
             <article class="card reveal">
-                <div class="card__icon">🚀</div>
+                <span class="card__icon" aria-hidden="true">🚀</span>
                 <h3 class="card__title">Gotowość do rozwoju</h3>
-                <p class="card__text">Kod zorganizowany tak, aby dodanie nowej sekcji, języka lub funkcji nie wymagało przepisywania całości.</p>
+                <p class="card__text">Kod zorganizowany tak, aby dodanie nowej sekcji, języka czy integracji nie wymagało przepisywania całości.</p>
             </article>
         </div>
     </div>
 </section>
 
+<!-- ===== JAK PRACUJĘ ===== -->
+<section class="section section--soft" id="proces">
+    <div class="container">
+        <header class="section__header">
+            <span class="section__eyebrow">Proces</span>
+            <h2 class="section__title">Jak pracuję</h2>
+            <p class="section__subtitle">
+                Pięć etapów prowadzących od pomysłu do gotowej strony — bez chaosu i niedomówień.
+            </p>
+        </header>
+        <div class="steps">
+            <div class="step reveal">
+                <span class="step__num">01 — Analiza</span>
+                <h3 class="step__title">Poznaję cel</h3>
+                <p class="step__text">Ustalam, do kogo mówi strona i jaki efekt ma osiągnąć.</p>
+            </div>
+            <div class="step reveal">
+                <span class="step__num">02 — Struktura</span>
+                <h3 class="step__title">Projektuję układ</h3>
+                <p class="step__text">Planuję sekcje, kolejność treści i ścieżkę użytkownika do CTA.</p>
+            </div>
+            <div class="step reveal">
+                <span class="step__num">03 — Wdrożenie</span>
+                <h3 class="step__title">Buduję stronę</h3>
+                <p class="step__text">Koduję responsywnie i dbam o poprawną strukturę techniczną.</p>
+            </div>
+            <div class="step reveal">
+                <span class="step__num">04 — Optymalizacja</span>
+                <h3 class="step__title">Dopracowuję detale</h3>
+                <p class="step__text">Sprawdzam wydajność, SEO oraz zachowanie na różnych urządzeniach.</p>
+            </div>
+            <div class="step reveal">
+                <span class="step__num">05 — Test</span>
+                <h3 class="step__title">Weryfikuję</h3>
+                <p class="step__text">Testuję formularze, linki, responsywność i dostępność przed publikacją.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- ===== TECHNOLOGIE ===== -->
-<section class="section section--soft" id="technologie">
+<section class="section" id="technologie">
     <div class="container">
         <header class="section__header">
             <span class="section__eyebrow">Stack</span>
-            <h2 class="section__title">Technologie</h2>
+            <h2 class="section__title">Technologie użyte w projekcie</h2>
             <p class="section__subtitle">
                 Wymieniam wyłącznie technologie faktycznie wykorzystane w tym projekcie.
             </p>
@@ -897,127 +1185,72 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
             <span class="tech-tag">Fetch API</span>
             <span class="tech-tag">Schema.org (JSON-LD)</span>
             <span class="tech-tag">Open Graph</span>
-            <span class="tech-tag">Google Fonts (Inter)</span>
             <span class="tech-tag">WCAG / a11y</span>
+            <span class="tech-tag">Google Fonts (Inter)</span>
         </div>
     </div>
 </section>
 
-<!-- ===== JAK PRACUJĘ ===== -->
-<section class="section" id="proces">
+<!-- ===== CO SPRAWDZAMY PRZED WDROŻENIEM ===== -->
+<section class="section section--soft" id="jakosc">
     <div class="container">
         <header class="section__header">
-            <span class="section__eyebrow">Proces</span>
-            <h2 class="section__title">Jak pracuję</h2>
+            <span class="section__eyebrow">Jakość</span>
+            <h2 class="section__title">Co sprawdzamy przed wdrożeniem</h2>
             <p class="section__subtitle">
-                Pięć etapów, które prowadzą od pomysłu do gotowej strony.
+                Checklista, którą przechodzi każda strona przed publikacją.
             </p>
         </header>
-        <div class="steps">
-            <div class="step reveal">
-                <div class="step__num">01</div>
-                <h3 class="step__title">Analiza</h3>
-                <p class="step__text">Poznaję cel strony, użytkownika i oczekiwany efekt.</p>
-            </div>
-            <div class="step reveal">
-                <div class="step__num">02</div>
-                <h3 class="step__title">Struktura</h3>
-                <p class="step__text">Projektuję układ treści, sekcje i ścieżkę CTA.</p>
-            </div>
-            <div class="step reveal">
-                <div class="step__num">03</div>
-                <h3 class="step__title">Wdrożenie</h3>
-                <p class="step__text">Buduję responsywną stronę z poprawną strukturą techniczną.</p>
-            </div>
-            <div class="step reveal">
-                <div class="step__num">04</div>
-                <h3 class="step__title">Optymalizacja</h3>
-                <p class="step__text">Sprawdzam wydajność, SEO i zachowanie na różnych urządzeniach.</p>
-            </div>
-            <div class="step reveal">
-                <div class="step__num">05</div>
-                <h3 class="step__title">Test</h3>
-                <p class="step__text">Sprawdzam formularze, responsywność i działanie strony przed publikacją.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ===== CO OTRZYMUJE KLIENT ===== -->
-<section class="section section--soft" id="wartosc">
-    <div class="container">
-        <header class="section__header">
-            <span class="section__eyebrow">Wartość</span>
-            <h2 class="section__title">Co otrzymuje klient</h2>
-            <p class="section__subtitle">
-                Konkretne, techniczne elementy, które przekładają się na efekt końcowy.
-            </p>
-        </header>
-        <div class="grid grid--4">
-            <article class="card reveal">
-                <div class="card__icon">⚡</div>
-                <h3 class="card__title">Szybkość</h3>
-                <p class="card__text">Strona projektowana z myślą o ograniczeniu zbędnych zasobów i liczby zapytań.</p>
-            </article>
-            <article class="card reveal">
-                <div class="card__icon">📱</div>
-                <h3 class="card__title">Responsywność</h3>
-                <p class="card__text">Jeden projekt przygotowany dla telefonu, tabletu i desktopu.</p>
-            </article>
-            <article class="card reveal">
-                <div class="card__icon">✏️</div>
-                <h3 class="card__title">Edytowalność</h3>
-                <p class="card__text">Struktura przygotowana tak, aby późniejsze zmiany nie wymagały przebudowy całej strony.</p>
-            </article>
-            <article class="card reveal">
-                <div class="card__icon">🚀</div>
-                <h3 class="card__title">Rozwój</h3>
-                <p class="card__text">Projekt może być później rozwijany o kolejne sekcje i funkcje.</p>
-            </article>
-        </div>
-    </div>
-</section>
-
-<!-- ===== WYDAJNOŚĆ ===== -->
-<section class="section" id="wydajnosc">
-    <div class="container">
-        <header class="section__header">
-            <span class="section__eyebrow">Wydajność projektu</span>
-            <h2 class="section__title">Wydajność projektu</h2>
-            <p class="section__subtitle">
-                Miejsce na realne wyniki pomiarów Lighthouse / PageSpeed Insights.
-            </p>
-        </header>
-        <div class="perf">
-            <div class="perf__item reveal">
-                <div class="perf__label">Performance</div>
-                <div class="perf__value">—</div>
-                <div class="perf__placeholder">do pomiaru</div>
-            </div>
-            <div class="perf__item reveal">
-                <div class="perf__label">Accessibility</div>
-                <div class="perf__value">—</div>
-                <div class="perf__placeholder">do pomiaru</div>
-            </div>
-            <div class="perf__item reveal">
-                <div class="perf__label">Best Practices</div>
-                <div class="perf__value">—</div>
-                <div class="perf__placeholder">do pomiaru</div>
-            </div>
-            <div class="perf__item reveal">
-                <div class="perf__label">SEO</div>
-                <div class="perf__value">—</div>
-                <div class="perf__placeholder">do pomiaru</div>
-            </div>
-        </div>
-        <p class="perf__note">
-            Wartości zostaną uzupełnione po wykonaniu pomiaru na docelowym środowisku (hosting + domena). Nie publikujemy wyników bez realnego testu.
+        <p class="perf-intro">
+            Wyniki pomiarów publikuję wyłącznie po wykonaniu realnego testu na docelowym środowisku (hosting + domena). Poniżej lista obszarów, które są weryfikowane.
         </p>
+        <div class="perf-list">
+            <div class="perf__item reveal">
+                <span class="perf__icon" aria-hidden="true">⚡</span>
+                <span class="perf__label">Szybkość ładowania</span>
+                <p class="perf__desc">Liczba zasobów, waga strony, czas pierwszego renderowania.</p>
+            </div>
+            <div class="perf__item reveal">
+                <span class="perf__icon" aria-hidden="true">📊</span>
+                <span class="perf__label">Core Web Vitals</span>
+                <p class="perf__desc">LCP, INP, CLS — realne wskaźniki odczuwalne przez użytkownika.</p>
+            </div>
+            <div class="perf__item reveal">
+                <span class="perf__icon" aria-hidden="true">📱</span>
+                <span class="perf__label">Wersja mobilna</span>
+                <p class="perf__desc">Układ, odstępy, czytelność, CTA i formularz na telefonie.</p>
+            </div>
+            <div class="perf__item reveal">
+                <span class="perf__icon" aria-hidden="true">🔍</span>
+                <span class="perf__label">SEO</span>
+                <p class="perf__desc">Meta tagi, hierarchia nagłówków, Open Graph, dane strukturalne.</p>
+            </div>
+            <div class="perf__item reveal">
+                <span class="perf__icon" aria-hidden="true">🖼️</span>
+                <span class="perf__label">Obrazy</span>
+                <p class="perf__desc">Formaty, kompresja, atrybuty alt, dostosowanie do ekranów.</p>
+            </div>
+            <div class="perf__item reveal">
+                <span class="perf__icon" aria-hidden="true">🧩</span>
+                <span class="perf__label">Skrypty i zasoby</span>
+                <p class="perf__desc">Minimalizacja, kolejność ładowania, brak zbędnych bibliotek.</p>
+            </div>
+            <div class="perf__item reveal">
+                <span class="perf__icon" aria-hidden="true">✅</span>
+                <span class="perf__label">Poprawność techniczna</span>
+                <p class="perf__desc">HTML, linki, formularze, konsola przeglądarki, brak błędów.</p>
+            </div>
+            <div class="perf__item reveal">
+                <span class="perf__icon" aria-hidden="true">♿</span>
+                <span class="perf__label">Dostępność</span>
+                <p class="perf__desc">Kontrasty, focus, nawigacja klawiaturą, wsparcie czytników ekranu.</p>
+            </div>
+        </div>
     </div>
 </section>
 
 <!-- ===== FAQ ===== -->
-<section class="section section--soft" id="faq">
+<section class="section" id="faq">
     <div class="container">
         <header class="section__header">
             <span class="section__eyebrow">FAQ</span>
@@ -1027,25 +1260,31 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
             <details class="faq__item reveal">
                 <summary class="faq__question">Czy strona będzie działać na telefonie?</summary>
                 <p class="faq__answer">
-                    Tak. Projekt jest budowany od początku w podejściu mobile-first i testowany osobno dla telefonu, tabletu oraz desktopu. Sprawdzam nie tylko układ, ale też wielkość tekstu, odstępy, przyciski CTA i formularz.
+                    Tak. Projekt jest budowany w podejściu mobile-first i testowany osobno dla telefonu, tabletu oraz komputera. Sprawdzam nie tylko układ, ale też wielkość tekstu, odstępy, przyciski CTA i formularz.
                 </p>
             </details>
             <details class="faq__item reveal">
                 <summary class="faq__question">Czy będę mógł sam zmieniać treści?</summary>
                 <p class="faq__answer">
-                    Tak. Strona może zostać wdrożona na WordPressie z intuicyjnym edytorem, dzięki czemu treści, obrazy i sekcje zmieniasz bez ingerencji w kod. Dodatkowo przygotowuję strukturę, która nie wymaga przebudowy przy drobnych zmianach.
+                    Tak. Strona może zostać wdrożona na WordPressie z intuicyjnym edytorem, dzięki czemu treści, obrazy i sekcje zmieniasz bez ingerencji w kod. Struktura jest przygotowana tak, aby drobne zmiany nie wymagały przebudowy całości.
                 </p>
             </details>
             <details class="faq__item reveal">
                 <summary class="faq__question">Czy zajmujesz się optymalizacją?</summary>
                 <p class="faq__answer">
-                    Tak. Optymalizacja wydajności jest częścią procesu — ograniczam liczbę zasobów, kompresuję obrazy, stosuję lazy loading i dbam o minimalny JavaScript. Cel to wysokie wyniki w Lighthouse i PageSpeed Insights.
+                    Tak. Optymalizacja wydajności jest częścią procesu — ograniczam liczbę zasobów, dbam o kompresję obrazów, lazy loading i minimalny JavaScript. Cel to dobre wyniki w Lighthouse i PageSpeed Insights.
                 </p>
             </details>
             <details class="faq__item reveal">
                 <summary class="faq__question">Czy możesz później rozwijać stronę?</summary>
                 <p class="faq__answer">
-                    Tak. Kod jest zorganizowany modułowo, więc dodanie nowych sekcji, integracji (np. płatności, rezerwacji, newslettera) czy wersji językowych nie wymaga przepisywania całości.
+                    Tak. Kod jest zorganizowany modułowo, więc dodanie nowych sekcji, integracji (np. rezerwacji, newslettera, płatności) czy wersji językowych nie wymaga przepisywania całości.
+                </p>
+            </details>
+            <details class="faq__item reveal">
+                <summary class="faq__question">Czy formularz na tej stronie wysyła wiadomości?</summary>
+                <p class="faq__answer">
+                    Nie. To projekt demonstracyjny — formularz jest w pełni funkcjonalny po stronie interfejsu (walidacja, komunikaty, ochrona antyspamowa), ale nie jest podpięty do żadnej prywatnej skrzynki. W rzeczywistej realizacji podłączam go do adresu e-mail klienta lub wybranego systemu kontaktowego.
                 </p>
             </details>
         </div>
@@ -1053,33 +1292,36 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 </section>
 
 <!-- ===== GITHUB ===== -->
-<section class="section" id="github">
+<section class="section section--soft" id="github">
     <div class="container">
         <div class="github-cta">
             <span class="github-cta__icon" aria-hidden="true">📂</span>
-            <h2 class="section__title">ZOBACZ KOD</h2>
+            <h2 class="section__title">Zobacz kod</h2>
             <p class="section__subtitle">
-                Kod projektu jest dostępny jako przykład sposobu organizacji i budowania nowoczesnych stron internetowych.
+                Kod projektu jest dostępny publicznie jako przykład organizacji i budowy nowoczesnych stron internetowych.
             </p>
             <a href="https://github.com/TWOJ-LOGIN/digital-portfolio"
-               class="btn btn--primary"
+               class="btn btn--outline"
                target="_blank"
                rel="noopener noreferrer">
                 Przejdź do repozytorium
             </a>
+            <p class="github-cta__caption">Otwiera się w nowej karcie.</p>
         </div>
     </div>
 </section>
 
 <!-- ===== KONTAKT ===== -->
-<section class="section section--soft" id="kontakt">
+<section class="section" id="kontakt">
     <div class="container contact__inner">
         <div class="contact__info">
-            <span class="section__eyebrow">Kontakt</span>
-            <h2 class="section__title">Porozmawiajmy o projekcie</h2>
-            <p class="section__subtitle">
-                Napisz, czego potrzebujesz — odpowiem konkretnie i bez zbędnych formalności.
-            </p>
+            <header class="section__header">
+                <span class="section__eyebrow">Kontakt</span>
+                <h2 class="section__title">Porozmawiajmy o projekcie</h2>
+                <p class="section__subtitle">
+                    Napisz, czego potrzebujesz — odpowiem konkretnie i bez zbędnych formalności.
+                </p>
+            </header>
             <ul class="contact__points">
                 <li>Odpowiedź w ciągu 24 godzin w dni robocze.</li>
                 <li>Bez zobowiązań — najpierw ustalamy zakres i cel.</li>
@@ -1087,7 +1329,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
             </ul>
         </div>
 
-        <form class="contact__form" id="contactForm" novalidate>
+        <form class="contact__form" id="contactForm" novalidate aria-describedby="formDemoNote">
             <div class="form__group">
                 <label for="name">Imię i nazwisko *</label>
                 <input type="text" id="name" name="name" required minlength="2" autocomplete="name" placeholder="Jan Kowalski">
@@ -1121,6 +1363,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
             <button type="submit" class="btn btn--primary btn--full" id="submitBtn">Wyślij wiadomość</button>
             <p class="form__status" id="formStatus" role="status" aria-live="polite"></p>
+
+            <p class="form__demo-note" id="formDemoNote">
+                Formularz demonstracyjny — nie wysyła wiadomości na prywatną skrzynkę. W rzeczywistej realizacji zostaje podłączony do adresu e-mail klienta lub wybranego systemu kontaktowego.
+            </p>
         </form>
     </div>
 </section>
@@ -1129,26 +1375,26 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 <footer class="footer">
     <div class="container footer__inner">
         <div class="footer__brand">
-            <span class="logo__mark">DP</span>
+            <span class="logo__mark" aria-hidden="true">DP</span>
             <strong>Digital Portfolio</strong>
-            <p>Projekt demonstracyjny pokazujący warsztat przy budowie nowoczesnych stron internetowych.</p>
+            <p>Projekt demonstracyjny pokazujący sposób budowy nowoczesnych, szybkich i przemyślanych stron internetowych.</p>
             <span class="footer__badge">Projekt demonstracyjny / Case Study</span>
         </div>
         <nav class="footer__nav" aria-label="Menu w stopce">
             <h4>Projekt</h4>
             <ul>
                 <li><a href="#zakres">Zakres</a></li>
-                <li><a href="#technologie">Technologie</a></li>
                 <li><a href="#proces">Proces</a></li>
-                <li><a href="#wydajnosc">Wydajność</a></li>
+                <li><a href="#technologie">Technologie</a></li>
+                <li><a href="#jakosc">Jakość</a></li>
             </ul>
         </nav>
         <div class="footer__legal">
             <h4>Linki</h4>
             <ul>
                 <li><a href="https://github.com/TWOJ-LOGIN/digital-portfolio" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-                <li><a href="#kontakt">Kontakt</a></li>
                 <li><a href="#faq">FAQ</a></li>
+                <li><a href="#kontakt">Kontakt</a></li>
             </ul>
         </div>
     </div>
@@ -1167,8 +1413,15 @@ document.getElementById('year').textContent = new Date().getFullYear();
 
 /* ===== STICKY HEADER ===== */
 const header = document.getElementById('header');
+let ticking = false;
 window.addEventListener('scroll', () => {
-    header.classList.toggle('scrolled', window.scrollY > 20);
+    if (!ticking) {
+        window.requestAnimationFrame(() => {
+            header.classList.toggle('scrolled', window.scrollY > 20);
+            ticking = false;
+        });
+        ticking = true;
+    }
 }, { passive: true });
 
 /* ===== MENU MOBILNE ===== */
@@ -1206,25 +1459,20 @@ if (!reduceMotion && 'IntersectionObserver' in window) {
                 io.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 } else {
     document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
 }
 
-/* ===== WALIDACJA I WYSYŁKA FORMULARZA ===== */
+/* ===== FORMULARZ DEMONSTRACYJNY ===== */
+/* Świadomie NIE jest podłączony do żadnego endpointu.
+   Formularz pokazuje pełny flow po stronie interfejsu:
+   walidację, komunikaty, stan przycisku i honeypot. */
 const form = document.getElementById('contactForm');
 const status = document.getElementById('formStatus');
 const submitBtn = document.getElementById('submitBtn');
-
-/* UWAGA: podmień poniższy adres na swój endpoint.
-   - WordPress REST API:  '/wp-json/contact/v1/send'
-   - Formspree:           'https://formspree.io/f/TWOJ_ID'
-   - Własny backend:      pełny URL
-   Jeśli zostawisz null, formularz pokaże jasny komunikat,
-   że wysyłka nie jest jeszcze podpięta. */
-const FORM_ENDPOINT = null;
 
 const validators = {
     name: (v) => v.trim().length >= 2 ? '' : 'Podaj imię i nazwisko (min. 2 znaki).',
@@ -1240,7 +1488,7 @@ function showError(field, message) {
     if (input) input.classList.toggle('error', !!message);
 }
 
-form.addEventListener('submit', async (e) => {
+form.addEventListener('submit', (e) => {
     e.preventDefault();
     status.textContent = '';
     status.className = 'form__status';
@@ -1268,35 +1516,18 @@ form.addEventListener('submit', async (e) => {
         return;
     }
 
-    if (!FORM_ENDPOINT) {
-        status.textContent = 'Formularz jest gotowy — wystarczy podpiąć endpoint wysyłki (instrukcja w kodzie).';
-        status.classList.add('error');
-        return;
-    }
-
+    /* Demonstracja pełnego flow bez wysyłki */
     submitBtn.disabled = true;
     const originalText = submitBtn.textContent;
     submitBtn.textContent = 'Wysyłanie...';
 
-    try {
-        const response = await fetch(FORM_ENDPOINT, {
-            method: 'POST',
-            body: data,
-            headers: { 'Accept': 'application/json' }
-        });
-
-        if (!response.ok) throw new Error('Request failed');
-
-        status.textContent = '✅ Dziękujemy! Wiadomość została wysłana. Odpowiemy w ciągu 24 godzin.';
+    setTimeout(() => {
+        status.textContent = '✅ Walidacja przebiegła poprawnie. To wersja demonstracyjna — formularz nie został wysłany.';
         status.classList.add('success');
-        form.reset();
-    } catch (err) {
-        status.textContent = 'Nie udało się wysłać wiadomości. Spróbuj ponownie lub napisz bezpośrednio na e-mail.';
-        status.classList.add('error');
-    } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = originalText;
-    }
+        /* form.reset(); — celowo pomijam, aby pokazać wpisane dane */
+    }, 500);
 });
 
 /* Czyszczenie błędów podczas wpisywania */
